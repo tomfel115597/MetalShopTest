@@ -14,4 +14,4 @@ jUnit 5.9.2
 
 **What is this repository for?**
 
-The tests are a part of the final project of the course for software tester with an introduction to automation. The next step is to implement the Page Object Model.
+The tests are a part of the final project of the course for software tester with an introduction to automation. The next step is to implementation the Page Object Model.
