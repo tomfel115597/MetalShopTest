@@ -1,3 +1,5 @@
+package tests;
+
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
@@ -5,11 +7,14 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import pages.LoginPage;
+import tests.BaseTest;
+
 import java.time.Duration;
 import java.util.List;
 
 public class MetalShopTests extends BaseTest {
-        public void loginOnPage(String login, String password) {
+    public void loginOnPage(String login, String password) {
         WebElement inputUserName = driverChrome.findElement(By.xpath("//input[@id='username']"));
         inputUserName.sendKeys(login);
 
@@ -19,6 +24,7 @@ public class MetalShopTests extends BaseTest {
         WebElement buttonLogin = driverChrome.findElement(By.cssSelector("button[name='login']"));
         buttonLogin.click();
     }
+
     private void productOnSaleList(int i) {
         List<WebElement> products = driverChrome.findElements(By.cssSelector("span[class=\"onsale\"]"));
         products.get(i).click();
@@ -28,33 +34,28 @@ public class MetalShopTests extends BaseTest {
         List<WebElement> productPrice = driverChrome.findElements(By.cssSelector("td.product-subtotal > span > bdi"));
         String prodPrice;
         prodPrice = productPrice.get(i).getText();
-        String numberOnly= prodPrice.replaceAll("[^0-9]", "");
+        String numberOnly = prodPrice.replaceAll("[^0-9]", "");
         int number = Integer.parseInt(numberOnly);
         return number;
     }
 
     @Test
     void shouldVerifyNegativeLoginWithoutUserName() {
-        WebElement myAccountMenuItem = driverChrome.findElement(By.id("menu-item-125"));
-        myAccountMenuItem.click();
+        LoginPage loginPage = new LoginPage(driverChrome);
 
-        loginOnPage("", "tymczasowehaslo");
-        WebElement errorMessage = driverChrome.findElement(By.className("woocommerce-error"));
+        loginPage.loginOnPage("", "tymczasowehaslo");
 
         String expectedErrorMessage = "Błąd: Nazwa użytkownika jest wymagana.";
-        Assertions.assertEquals(expectedErrorMessage, errorMessage.getText());
+        Assertions.assertEquals(expectedErrorMessage, loginPage.errorMessage.getText());
     }
 
     @Test
     void shouldVerifyNegativeLoginWithoutPassword() {
-        WebElement myAccountMenuItem = driverChrome.findElement(By.id("menu-item-125"));
-        myAccountMenuItem.click();
+        LoginPage loginPage = new LoginPage(driverChrome);
+        loginPage.loginOnPage("tester_tf", "");
 
-        loginOnPage("tester_tf", "");
-
-        WebElement errorMessage = driverChrome.findElement(By.className("woocommerce-error"));
         String expectedErrorMessage = "Błąd: pole hasła jest puste.";
-        Assertions.assertEquals(expectedErrorMessage, errorMessage.getText());
+        Assertions.assertEquals(expectedErrorMessage, loginPage.errorMessage.getText());
     }
 
     @Test
@@ -222,6 +223,7 @@ public class MetalShopTests extends BaseTest {
         String myAccountTextVerification = "Witaj tester_tf (nie jesteś tester_tf?";
         Assertions.assertTrue(myAccountContent.getText().contains(myAccountTextVerification));
     }
+
     @Test
     void shouldAddPromotedProductToCartAndVerifyPrice() {
         List<WebElement> products = driverChrome.findElements(By.cssSelector("span[class=\"onsale\"]"));
