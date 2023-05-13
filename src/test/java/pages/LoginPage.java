@@ -25,9 +25,13 @@ public class LoginPage {
     @FindBy(css = "button[name='login']")
     private WebElement buttonLogin;
 
-    public LoginPage(WebDriver driverChrome){
+    @FindBy(className = "woocommerce-notices-wrapper")
+    public WebElement myAccountContent;
+
+   public LoginPage(WebDriver driverChrome) {
         PageFactory.initElements(driverChrome, this);
     }
+
     public void loginOnPage(String login, String password) {
         myAccountMenuItem.click();
         inputUserName.sendKeys(login);

@@ -8,22 +8,23 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import pages.LoginPage;
+import pages.RegisterPage;
 import tests.BaseTest;
 
 import java.time.Duration;
 import java.util.List;
 
 public class MetalShopTests extends BaseTest {
-    public void loginOnPage(String login, String password) {
-        WebElement inputUserName = driverChrome.findElement(By.xpath("//input[@id='username']"));
-        inputUserName.sendKeys(login);
-
-        WebElement inputPassword = driverChrome.findElement(By.cssSelector("#password"));
-        inputPassword.sendKeys(password);
-
-        WebElement buttonLogin = driverChrome.findElement(By.cssSelector("button[name='login']"));
-        buttonLogin.click();
-    }
+//    public void loginOnPage(String login, String password) {
+//        WebElement inputUserName = driverChrome.findElement(By.xpath("//input[@id='username']"));
+//        inputUserName.sendKeys(login);
+//
+//        WebElement inputPassword = driverChrome.findElement(By.cssSelector("#password"));
+//        inputPassword.sendKeys(password);
+//
+//        WebElement buttonLogin = driverChrome.findElement(By.cssSelector("button[name='login']"));
+//        buttonLogin.click();
+//    }
 
     private void productOnSaleList(int i) {
         List<WebElement> products = driverChrome.findElements(By.cssSelector("span[class=\"onsale\"]"));
@@ -40,61 +41,21 @@ public class MetalShopTests extends BaseTest {
     }
 
     @Test
-    void shouldVerifyNegativeLoginWithoutUserName() {
-        LoginPage loginPage = new LoginPage(driverChrome);
-
-        loginPage.loginOnPage("", "tymczasowehaslo");
-
-        String expectedErrorMessage = "Błąd: Nazwa użytkownika jest wymagana.";
-        Assertions.assertEquals(expectedErrorMessage, loginPage.errorMessage.getText());
-    }
-
-    @Test
-    void shouldVerifyNegativeLoginWithoutPassword() {
-        LoginPage loginPage = new LoginPage(driverChrome);
-        loginPage.loginOnPage("tester_tf", "");
-
-        String expectedErrorMessage = "Błąd: pole hasła jest puste.";
-        Assertions.assertEquals(expectedErrorMessage, loginPage.errorMessage.getText());
-    }
-
-    @Test
     void shouldVerifyPositiveRegistration() {
-        WebElement myAccountMenuItem = driverChrome.findElement(By.id("menu-item-146"));
-        myAccountMenuItem.click();
-        long currentTime = System.currentTimeMillis();
-
-        WebElement inputUserName = driverChrome.findElement(By.xpath("//input[@id='user_login']"));
-        inputUserName.click();
-        inputUserName.sendKeys(currentTime + "testerek_tf");
-
-        WebElement inputPassword = driverChrome.findElement(By.xpath("//input[@id='user_pass']"));
-        inputPassword.click();
-        inputPassword.sendKeys("$Testerek2023");
-
-        WebElement inputUserEmail = driverChrome.findElement(By.xpath("//input[@id='user_email']"));
-        inputUserEmail.click();
-        inputUserEmail.sendKeys(currentTime + "testerek@yopmail.com");
-
-        WebElement inputConfirmPassword = driverChrome.findElement(By.xpath
-                ("//input[@id='user_confirm_password']"));
-        inputConfirmPassword.click();
-        inputConfirmPassword.sendKeys("$Testerek2023");
-
-        inputConfirmPassword.sendKeys(Keys.ENTER);
-        WebElement buttonSubmit = driverChrome.findElement(By.xpath("//button[contains(.,'Submit')]"));
-        buttonSubmit.click();
+        RegisterPage registerPage = new RegisterPage(driverChrome);
+        LoginPage loginPage = new LoginPage(driverChrome);
+        registerPage.registerOnPage("testerek_tf", "$Testerek2023", "testerek@yopmail.com");
 
         Wait wait = new WebDriverWait(driverChrome, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("//div[@class='user-registration-password-strength strong']")));
-        WebElement registerMessage = driverChrome.findElement
-                (By.xpath("//ul[contains(.,'User successfully registered.')]"));
+//        WebElement registerMessage = driverChrome.findElement
+//                (By.xpath("//ul[contains(.,'User successfully registered.')]"));
 
         String expectedRegisterMessage = "User successfully registered.";
-        Assertions.assertEquals(expectedRegisterMessage, registerMessage.getText());
+        Assertions.assertEquals(expectedRegisterMessage, registerPage.registerMessage.getText());
 
-        loginOnPage("nowy_login", "nowe_haslo");
+        loginPage.loginOnPage("nowy_login", "nowe_haslo");
     }
 
     @Test
@@ -211,17 +172,6 @@ public class MetalShopTests extends BaseTest {
                 (By.xpath("//p[text()='Twój koszyk aktualnie jest pusty.']"));
         String message = "Twój koszyk aktualnie jest pusty.";
         Assertions.assertEquals(message, messageCart.getText());
-    }
-
-    @Test
-    void shouldVerifyPositiveLogin() {
-        WebElement myAccountMenuItem = driverChrome.findElement(By.id("menu-item-125"));
-        myAccountMenuItem.click();
-        loginOnPage("tester_tf", "$Programista2023$");
-
-        WebElement myAccountContent = driverChrome.findElement(By.className("woocommerce-MyAccount-content"));
-        String myAccountTextVerification = "Witaj tester_tf (nie jesteś tester_tf?";
-        Assertions.assertTrue(myAccountContent.getText().contains(myAccountTextVerification));
     }
 
     @Test
