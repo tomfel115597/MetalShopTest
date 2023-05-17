@@ -28,7 +28,7 @@ public class LoginPage {
     @FindBy(className = "woocommerce-notices-wrapper")
     public WebElement myAccountContent;
 
-   public LoginPage(WebDriver driverChrome) {
+    public LoginPage(WebDriver driverChrome) {
         PageFactory.initElements(driverChrome, this);
     }
 

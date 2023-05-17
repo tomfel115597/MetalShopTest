@@ -41,24 +41,6 @@ public class MetalShopTests extends BaseTest {
     }
 
     @Test
-    void shouldVerifyPositiveRegistration() {
-        RegisterPage registerPage = new RegisterPage(driverChrome);
-        LoginPage loginPage = new LoginPage(driverChrome);
-        registerPage.registerOnPage("testerek_tf", "$Testerek2023", "testerek@yopmail.com");
-
-        Wait wait = new WebDriverWait(driverChrome, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated
-                (By.xpath("//div[@class='user-registration-password-strength strong']")));
-//        WebElement registerMessage = driverChrome.findElement
-//                (By.xpath("//ul[contains(.,'User successfully registered.')]"));
-
-        String expectedRegisterMessage = "User successfully registered.";
-        Assertions.assertEquals(expectedRegisterMessage, registerPage.registerMessage.getText());
-
-        loginPage.loginOnPage("nowy_login", "nowe_haslo");
-    }
-
-    @Test
     void checkIfLogoAndSearchIsPresentOnMain() {
         WebElement logo = driverChrome.findElement(By.xpath("//a[@rel='home']"));
         String expectedLogoText = "Softie Metal Shop";

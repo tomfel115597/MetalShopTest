@@ -35,7 +35,7 @@ public class RegisterPage {
     @FindBy(xpath = "//ul[contains(.,'User successfully registered.')]")
     public WebElement registerMessage;
 
-    public RegisterPage(WebDriver driverChrome) {
+       public RegisterPage(WebDriver driverChrome) {
         PageFactory.initElements(driverChrome, this);
     }
 
