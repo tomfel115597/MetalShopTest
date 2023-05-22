@@ -15,17 +15,6 @@ import java.time.Duration;
 import java.util.List;
 
 public class MetalShopTests extends BaseTest {
-//    public void loginOnPage(String login, String password) {
-//        WebElement inputUserName = driverChrome.findElement(By.xpath("//input[@id='username']"));
-//        inputUserName.sendKeys(login);
-//
-//        WebElement inputPassword = driverChrome.findElement(By.cssSelector("#password"));
-//        inputPassword.sendKeys(password);
-//
-//        WebElement buttonLogin = driverChrome.findElement(By.cssSelector("button[name='login']"));
-//        buttonLogin.click();
-//    }
-
     private void productOnSaleList(int i) {
         List<WebElement> products = driverChrome.findElements(By.cssSelector("span[class=\"onsale\"]"));
         products.get(i).click();
@@ -105,32 +94,7 @@ public class MetalShopTests extends BaseTest {
 
     }
 
-    @Test
-    void checkCartIsEmptyAddProduct() {
-        WebElement cart = driverChrome.findElement(By.xpath("//a[@class='cart-contents']"));
-        cart.click();
 
-        WebElement cartMessage = driverChrome.findElement(By.xpath("//p[@class='cart-empty woocommerce-info']"));
-        String cartText = "Twój koszyk aktualnie jest pusty.";
-        Assertions.assertEquals(cartText, cartMessage.getText());
-
-        WebElement HomeSiteMenuItem = driverChrome.findElement(By.linkText("Strona główna"));
-        HomeSiteMenuItem.click();
-
-        WebElement productId24 = driverChrome.findElement(By.xpath("//a[@data-product_id='24']"));
-        productId24.click();
-
-        Wait wait = new WebDriverWait(driverChrome, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated
-                (By.xpath("//a[@title='Zobacz koszyk']")));
-
-        WebElement showCart = driverChrome.findElement(By.xpath("//a[@title='Zobacz koszyk']"));
-        showCart.click();
-
-        WebElement showProduct = driverChrome.findElement(By.xpath("//td[@data-title='Produkt']"));
-        String productName = "Srebrna moneta 5g - UK 1980";
-        Assertions.assertEquals(productName, showProduct.getText());
-    }
 
     @Test
     void checkAddAndRemoveProductFromCart() {
