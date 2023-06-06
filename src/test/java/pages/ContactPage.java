@@ -10,7 +10,32 @@ public class ContactPage {
     public WebElement contact;
     @FindBy(xpath = "//header/h1[@class='entry-title']")
     public WebElement contactHeader;
+    @FindBy(name = "your-name")
+    public WebElement inputYourName;
+
+    @FindBy(name = "your-email")
+    public WebElement inputYourEmail;
+
+    @FindBy(name = "your-subject")
+    public WebElement inputYourSubject;
+
+    @FindBy(name = "your-message")
+    public WebElement inputYourMessage;
+
+    @FindBy(xpath = "//input[@value='Wyślij']")
+    public WebElement buttonSubmit;
+
+    @FindBy(name = "wpcf7-response-output")
+    public WebElement contactMessage;
+
     public ContactPage(WebDriver driverChrome) {
         PageFactory.initElements(driverChrome, this);
+    }
+
+    public String getContactHeader() {
+        return contactHeader.getText();
+    }
+    public String getContactMessageText(){
+        return contactMessage.getText();
     }
 }

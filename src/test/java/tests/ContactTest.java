@@ -2,8 +2,6 @@ package tests;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import pages.ContactPage;
 
 public class ContactTest extends BaseTest {
@@ -12,7 +10,21 @@ public class ContactTest extends BaseTest {
         ContactPage contactPage = new ContactPage(driverChrome);
         contactPage.contact.click();
 
-        String expectedContactText = "Kontakt";
-        Assertions.assertEquals(expectedContactText, contactPage.contactHeader.getText());
+        Assertions.assertEquals("Kontakt", contactPage.getContactHeader());
+    }
+
+    @Test
+    void checkSendMessageContact() {
+        ContactPage contactPage = new ContactPage(driverChrome);
+        contactPage.contact.click();
+
+        contactPage.inputYourName.sendKeys("Jan Tester");
+        contactPage.inputYourEmail.sendKeys("brabumonnoido-5897@yopmail.com");
+        contactPage.inputYourSubject.sendKeys("Zapytanie");
+        contactPage.inputYourMessage.sendKeys("Wiadomość próbna");
+        contactPage.buttonSubmit.click();
+
+        Assertions.assertEquals("Wystąpił problem z wysłaniem twojej wiadomości. Spróbuj ponownie później.",
+                contactPage.getContactMessageText()Text());
     }
 }
