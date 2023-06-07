@@ -11,7 +11,7 @@ import pages.ShoppingPage;
 
 import java.time.Duration;
 
-public class ShoppingTest extends BaseTest{
+public class ShoppingTest extends BaseTest {
     @Test
     void checkCartIsEmptyAddProduct() {
         ShoppingPage shoppingPage = new ShoppingPage(driverChrome);
@@ -33,4 +33,23 @@ public class ShoppingTest extends BaseTest{
         String productName = "Srebrna moneta 5g - UK 1980";
         Assertions.assertEquals(productName, shoppingPage.showProduct.getText());
     }
+
+    @Test
+    void checkAddAndRemoveProductFromCart() {
+        ShoppingPage shoppingPage = new ShoppingPage(driverChrome);
+        shoppingPage.productSrebrnaMoneta.click();
+
+        Wait waitCart = new WebDriverWait(driverChrome, Duration.ofSeconds(10));
+        waitCart.until(ExpectedConditions.visibilityOf(shoppingPage.showCart));
+
+        shoppingPage.showCart.click();
+        shoppingPage.removeProduct.click();
+
+        Wait waitCartMessage = new WebDriverWait(driverChrome, Duration.ofSeconds(10));
+        waitCartMessage.until(ExpectedConditions.visibilityOfElementLocated
+                (By.className("woocommerce-message")));
+
+        Assertions.assertEquals("Twój koszyk aktualnie jest pusty.", shoppingPage.getMessageEmptyCart());
+    }
+
 }

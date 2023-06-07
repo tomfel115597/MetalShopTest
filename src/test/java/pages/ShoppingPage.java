@@ -22,6 +22,21 @@ public class ShoppingPage {
 
     @FindBy(xpath = "//td[@data-title='Produkt']")
     public WebElement showProduct;
+    @FindBy(xpath = "//a[@data-product_id='24']")
+    public WebElement productSrebrnaMoneta;
+
+    @FindBy(xpath = "//a[@title='Zobacz koszyk']")
+    public WebElement showCart;
+
+    @FindBy(xpath = "//a[text()='×']")
+    public WebElement removeProduct;
+
+    @FindBy(xpath = "//p[text()='Twój koszyk aktualnie jest pusty.']")
+    public WebElement messageEmptyCart;
+
+    public String getMessageEmptyCart() {
+        return messageEmptyCart.getText();
+    }
 
 
     public ShoppingPage(WebDriver driverChrome) {

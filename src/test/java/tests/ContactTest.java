@@ -27,4 +27,20 @@ public class ContactTest extends BaseTest {
         Assertions.assertEquals("Wystąpił problem z wysłaniem twojej wiadomości. Spróbuj ponownie później.",
                 contactPage.getContactMessageText()Text());
     }
+
+    @Test
+    void checkSendMessageContact() {
+        ContactPage contactPage = new ContactPage(driverChrome);
+        contactPage.contact.click();
+
+        contactPage.inputYourName.sendKeys("Jan Tester");
+        contactPage.inputYourEmail.sendKeys("brabumonnoido-5897@yopmail.com");
+        contactPage.inputYourSubject.sendKeys("Zapytanie");
+        contactPage.inputYourMessage.sendKeys("Wiadomość próbna");
+        contactPage.buttonSubmit.click();
+
+        Assertions.assertEquals("Wystąpił problem z wysłaniem twojej wiadomości. Spróbuj ponownie później.",
+                contactPage.getContactMessageText());
+    }
+
 }
