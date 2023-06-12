@@ -1,10 +1,13 @@
 package pages;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import tests.BaseTest;
+
+import java.util.List;
 
 public class ShoppingPage {
     @FindBy(xpath = "//a[@class=\'cart-contents\']")
@@ -33,8 +36,40 @@ public class ShoppingPage {
     @FindBy(xpath = "//p[text()='Twój koszyk aktualnie jest pusty.']")
     public WebElement messageEmptyCart;
 
+    @FindBy(css = "span[class=\"onsale\"]")
+    public List<WebElement> products;
+
+    @FindBy(css = "td.product-subtotal > span > bdi")
+    public List<WebElement> productPrice;
+
+    @FindBy(css = "button[name=\"add-to-cart\"]")
+    public WebElement addToCart;
+
+    @FindBy(id = "menu-item-124")
+    public WebElement toShop;
+
+    @FindBy(id = "site-header-cart")
+    public WebElement shopBox;
+
+    @FindBy(css = "tr.cart-subtotal > td > span > bdi")
+    public WebElement totalCartPrice;
+
     public String getMessageEmptyCart() {
         return messageEmptyCart.getText();
+    }
+
+    public void productOnSaleList(int i) {
+//        List<WebElement> products = driverChrome.findElements(By.cssSelector("span[class=\"onsale\"]"));
+        products.get(i).click();
+    }
+
+    public int productOnSaleStringToInt(int i) {
+//        List<WebElement> productPrice = driverChrome.findElements(By.cssSelector("td.product-subtotal > span > bdi"));
+        String prodPrice;
+        prodPrice = productPrice.get(i).getText();
+        String numberOnly = prodPrice.replaceAll("[^0-9]", "");
+        int number = Integer.parseInt(numberOnly);
+        return number;
     }
 
 

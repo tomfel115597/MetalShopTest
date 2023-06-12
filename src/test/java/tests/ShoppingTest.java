@@ -48,4 +48,22 @@ public class ShoppingTest extends BaseTest {
         Assertions.assertEquals("Twój koszyk aktualnie jest pusty.", shoppingPage.getMessageEmptyCart());
     }
 
+    @Test
+    void shouldAddPromotedProductToCartAndVerifyPrice() {
+        ShoppingPage shoppingPage = new ShoppingPage(driverChrome);
+        int sum = 0;
+        for (int i = 0; i < shoppingPage.products.size(); i++) {
+            shoppingPage.productOnSaleList(i);
+            shoppingPage.addToCart.click();
+            shoppingPage.toShop.click();
+        }
+        shoppingPage.shopBox.click();
+        for (int i = 0; i < shoppingPage.productPrice.size(); i++) {
+            shoppingPage.productOnSaleStringToInt(i);
+            sum += shoppingPage.productOnSaleStringToInt(i);
+        }
+        String totalPrice = shoppingPage.totalCartPrice.getText().replaceAll("[^0-9]", "");
+        int totalPriceInteger = Integer.parseInt(totalPrice);
+        Assertions.assertEquals(sum, totalPriceInteger);
+    }
 }
