@@ -3,6 +3,7 @@ package tests;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -11,6 +12,23 @@ import pages.ShoppingPage;
 import java.time.Duration;
 
 public class ShoppingTest extends BaseTest {
+
+    @Test
+    void checkIfLogoAndSearchIsPresentOnMain() {
+        ShoppingPage shoppingPage = new ShoppingPage(driverChrome);
+
+        shoppingPage.myAccountMenuItem.click();
+        Assertions.assertEquals("Softie Metal Shop", shoppingPage.logo.getText());
+        Assertions.assertTrue(shoppingPage.search.isDisplayed());
+    }
+    @Test
+    void shouldVerifyNavigateFromLoginSiteToHome() {
+        ShoppingPage shoppingPage = new ShoppingPage(driverChrome);
+        driverChrome.navigate().to
+                ("http://serwer169007.lh.pl/autoinstalator/serwer169007.lh.pl/wordpress10772/moje-konto/");
+        shoppingPage.homeSiteMenuItem.click();
+        Assertions.assertEquals("Sklep", shoppingPage.homeHeader.getText());
+    }
     @Test
     void checkCartIsEmptyAddProduct() {
         ShoppingPage shoppingPage = new ShoppingPage(driverChrome);
