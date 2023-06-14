@@ -11,8 +11,7 @@ public class LoginTest extends BaseTest {
 
         loginPage.loginOnPage("", "tymczasowehaslo");
 
-        String expectedErrorMessage = "Błąd: Nazwa użytkownika jest wymagana.";
-        Assertions.assertEquals(expectedErrorMessage, loginPage.errorMessage.getText());
+        Assertions.assertEquals("Błąd: Nazwa użytkownika jest wymagana.", loginPage.errorMessage.getText());
     }
 
     @Test
@@ -21,16 +20,25 @@ public class LoginTest extends BaseTest {
 
         loginPage.loginOnPage("tester_tf", "");
 
-        String expectedErrorMessage = "Błąd: pole hasła jest puste.";
-        Assertions.assertEquals(expectedErrorMessage, loginPage.errorMessage.getText());
+        Assertions.assertEquals("Błąd: pole hasła jest puste.", loginPage.errorMessage.getText());
+    }
+
+    @Test
+    void shouldVerifyNegativeLoginWrongEmailProvided() {
+        LoginPage loginPage = new LoginPage(driverChrome);
+
+        loginPage.loginOnPage("wrong@yopmail.com", "tymczasowehasło");
+
+        Assertions.assertEquals("Nieznany adres e-mail. " +
+                "Proszę sprawdzić ponownie lub wypróbować swoją nazwę użytkownika.", loginPage.errorMessage.getText());
     }
 
     @Test
     void shouldVerifyPositiveLogin() {
         LoginPage loginPage = new LoginPage(driverChrome);
+
         loginPage.loginOnPage("tester_tf", "$Programista2023$");
 
-        String myAccountTextVerification = "Witaj tester_tf (nie jesteś tester_tf?";
-        Assertions.assertEquals(myAccountTextVerification, loginPage.myAccountContent.getText());
+        Assertions.assertEquals("Witaj tester_tf (nie jesteś tester_tf?", loginPage.myAccountContent.getText());
     }
 }
