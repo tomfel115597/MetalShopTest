@@ -34,6 +34,16 @@ public class LoginTest extends BaseTest {
     }
 
     @Test
+    void shouldVerifyNegativeLoginWrongPasswordProvided() {
+        LoginPage loginPage = new LoginPage(driverChrome);
+
+        loginPage.loginOnPage("tester_tf", "zlehaslo");
+
+        Assertions.assertEquals("Błąd: wpisano niepoprawne hasło dla użytkownika tester_tf. " +
+                "Nie pamiętasz hasła?", loginPage.errorMessage.getText());
+    }
+
+    @Test
     void shouldVerifyPositiveLogin() {
         LoginPage loginPage = new LoginPage(driverChrome);
 
