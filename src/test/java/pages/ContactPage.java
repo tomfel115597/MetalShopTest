@@ -28,8 +28,8 @@ public class ContactPage {
     @FindBy(name = "wpcf7-response-output")
     public WebElement contactMessage;
 
-    public ContactPage(WebDriver driverChrome) {
-        PageFactory.initElements(driverChrome, this);
+    public ContactPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 
     public String getContactHeader() {

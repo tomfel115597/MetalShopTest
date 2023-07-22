@@ -14,11 +14,11 @@ import java.time.Duration;
 public class RegisterTest extends BaseTest {
     @Test
     void shouldVerifyPositiveRegistration() {
-        RegisterPage registerPage = new RegisterPage(driverChrome);
-        LoginPage loginPage = new LoginPage(driverChrome);
+        RegisterPage registerPage = new RegisterPage(driver);
+        LoginPage loginPage = new LoginPage(driver);
         registerPage.registerOnPage("testerek_tf", "$Testerek2023", "testerek@yopmail.com");
 
-        Wait wait = new WebDriverWait(driverChrome, Duration.ofSeconds(10));
+        Wait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOfElementLocated
                 (By.xpath("//div[@class='user-registration-password-strength strong']")));//sprawdzić
 

@@ -76,7 +76,6 @@ public class ShoppingPage {
     }
 
     public int productOnSaleStringToInt(int i) {
-//        List<WebElement> productPrice = driverChrome.findElements(By.cssSelector("td.product-subtotal > span > bdi"));
         String prodPrice;
         prodPrice = productPrice.get(i).getText();
         String numberOnly = prodPrice.replaceAll("[^0-9]", "");
@@ -85,7 +84,7 @@ public class ShoppingPage {
     }
 
 
-    public ShoppingPage(WebDriver driverChrome) {
-        PageFactory.initElements(driverChrome, this);
+    public ShoppingPage(WebDriver driver) {
+        PageFactory.initElements(driver, this);
     }
 }
