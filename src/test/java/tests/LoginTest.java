@@ -13,6 +13,7 @@ public class LoginTest extends BaseTest {
         loginPage.loginOnPage("", "temporaryPassword");
 
         Assertions.assertEquals("Błąd: Nazwa użytkownika jest wymagana.", loginPage.errorMessage.getText());
+//        Assertions.assertTrue(loginPage.isEmailRequiredAlertDisplayed());
     }
 
     @Test

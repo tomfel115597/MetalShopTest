@@ -8,28 +8,35 @@ import org.openqa.selenium.support.PageFactory;
 
 public class RegisterPage {
     @FindBy(id = "menu-item-146")
-    private WebElement myAccountMenuItem;
+    public WebElement myAccountMenuItem;
 
     @FindBy(xpath = "//input[@id='user_login']")
-    private WebElement inputUserName;
+    public WebElement inputUserName;
 
     @FindBy(xpath = "//input[@id='user_pass']")
-    private WebElement inputPassword;
+    public WebElement inputPassword;
 
     @FindBy(xpath = "//input[@id='user_email']")
-    private WebElement inputUserEmail;
+    public WebElement inputUserEmail;
 
     @FindBy(xpath = "//input[@id='user_confirm_password']")
-    private WebElement inputConfirmPassword;
+    public WebElement inputConfirmPassword;
 
     @FindBy(xpath = "//button[contains(.,'Submit')]")
-    private WebElement buttonSubmit;
+    public WebElement buttonSubmit;
 
     @FindBy(xpath = "//ul[contains(.,'User successfully registered.')]")
     public WebElement registerMessage;
 
-       public RegisterPage(WebDriver driver) {
+    @FindBy(xpath = "//li[contains(.,'Email already exists.')]")
+    private WebElement error;
+
+    public RegisterPage(WebDriver driver) {
         PageFactory.initElements(driver, this);
+    }
+
+    public  WebElement getError(){
+        return error;
     }
 
     public void registerOnPage(String login, String password, String email) {
@@ -46,4 +53,6 @@ public class RegisterPage {
         inputConfirmPassword.sendKeys(Keys.ENTER);
         buttonSubmit.click();
     }
+
+
 }
